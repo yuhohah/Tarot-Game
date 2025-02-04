@@ -8,5 +8,5 @@ Command line to compile in a .exe file: python -m PyInstaller --onefile --nocons
 
 <img src="https://github.com/yuhohah/Tarot-Game/blob/main/Example.png" alt="Texto Alternativo">
 ![text](https://github.com/yuhohah/Tarot-Game/blob/main/Example.png?raw=true) 
-https://github.com/yuhohah/Tarot-Game/blob/main/Example1.png
+[https://github.com/yuhohah/Tarot-Game/blob/main/Example1.png]
 https://github.com/yuhohah/Tarot-Game/blob/main/Example2.png
