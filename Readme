@@ -3,10 +3,5 @@ Tarot Game in Python
 A project to understand Python and make use of it, the subject of being a tarot game is only because its cool
 
 Command line to run: python3 Deck.py && python3 Jogo_Completo.py
+
 Command line to compile in a .exe file: python -m PyInstaller --onefile --noconsole --add-data "images;images" --add-data "Deck.py;." Jogo_Completo.py
-
-
-<img src="https://github.com/yuhohah/Tarot-Game/blob/main/Example.png" alt="Texto Alternativo">
-![text](https://prnt.sc/lUJ1hgzPJEzI) 
-[https://github.com/yuhohah/Tarot-Game/blob/main/Example1.png]
-https://github.com/yuhohah/Tarot-Game/blob/main/Example2.png
