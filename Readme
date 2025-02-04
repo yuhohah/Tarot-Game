@@ -5,6 +5,8 @@ A project to understand Python and make use of it, the subject of being a tarot 
 Command line to run: python3 Deck.py && python3 Jogo_Completo.py
 Command line to compile in a .exe file: python -m PyInstaller --onefile --noconsole --add-data "images;images" --add-data "Deck.py;." Jogo_Completo.py
 
+
+<img src="https://github.com/yuhohah/Tarot-Game/blob/main/Example.png?raw=true" alt="Texto Alternativo">
 https://github.com/yuhohah/Tarot-Game/blob/main/Example.png?raw=true 
 https://github.com/yuhohah/Tarot-Game/blob/main/Example1.png?raw=true
 https://github.com/yuhohah/Tarot-Game/blob/main/Example2.png?raw=true
