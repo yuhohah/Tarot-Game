@@ -1,8 +1,6 @@
 import tkinter as tk
-
 from PIL import ImageTk, Image
 from utils.resource_path import resource_path
-
 
 class Application:
     def __init__(self, root):

@@ -3,7 +3,6 @@ from PIL import ImageTk, Image
 from models.deck_manager import DeckManager
 from utils.resource_path import resource_path
 
-
 class GameView:
     def __init__(self, root):
         self.root = root

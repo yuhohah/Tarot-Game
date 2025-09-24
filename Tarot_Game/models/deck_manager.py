@@ -1,5 +1,4 @@
-from .Deck import Deck
-
+from .deck import Deck
 
 class DeckManager:
     def __init__(self):

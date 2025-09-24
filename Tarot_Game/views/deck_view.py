@@ -4,7 +4,6 @@ from PIL import ImageTk, Image
 from models import Deck
 from utils.resource_path import resource_path
 
-
 class DeckView:
     def __init__(self, root):
         self.root = root
