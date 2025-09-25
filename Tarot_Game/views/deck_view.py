@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from PIL import ImageTk, Image
-from models import Deck
+from models.deck import Deck
 from utils.resource_path import resource_path
 
 class DeckView:

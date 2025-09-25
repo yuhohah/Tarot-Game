@@ -4,13 +4,17 @@ from models.deck_manager import DeckManager
 from utils.resource_path import resource_path
 
 class GameView:
-    def __init__(self, root):
+    def __init__(self, root, app_instance):
         self.root = root
         self.deck_manager = DeckManager()
         self.btn1 = None
         self.btn2 = None
         self.background_label = None  # Referência ao background
         self.setup_ui()
+
+        self.root.bind('<Escape>', lambda e: self.go_back())
+        self.show_cards_immediately = app_instance.show_cards_immediately
+        print(self.show_cards_immediately)
 
     def setup_ui(self):
         self.setup_background()
@@ -140,9 +144,103 @@ class GameView:
             bg="#708090",
             fg="white",
             padx=10, pady=5,
-            wraplength=400 if column == 2 else 300
+            wraplength=350 
         )
         message.grid(row=2, column=column, pady=20, sticky="n")
+
+    def display_card_hidden(self, carta, column, reversed=False):
+        return 0
+
+    def show_card_details(self, carta, reversed=False):
+        """Exibe os detalhes da carta em uma janela popup"""
+        detail_window = tk.Toplevel(self.root)
+        detail_window.title(f"Detalhes da Carta: {carta['name']}")
+        detail_window.geometry("600x900")
+        detail_window.resizable(False, False)
+
+        # Frame principal
+        main_frame = tk.Frame(detail_window, bg="#708090")
+        main_frame.pack(fill="both", expand=True, padx=10, pady=10)
+
+        # Nome da carta
+        tk.Label(
+            main_frame,
+            text=f"{carta['name']} - {carta['sequence']}",
+            font=('Arial 20 bold'),
+            bg="#708090",
+            fg="white",
+            pady=10
+        ).pack()
+
+        # Imagem da carta (maior)
+        try:
+            image_path = resource_path(carta['image'])
+            image = Image.open(image_path)
+            image = image.resize((250, 450), Image.LANCZOS)
+            photo = ImageTk.PhotoImage(image)
+
+            img_label = tk.Label(main_frame, image=photo, bg="#000000")
+            img_label.image = photo
+            img_label.pack(pady=10)
+        except FileNotFoundError:
+            tk.Label(main_frame, text="Imagem não disponível",
+                     bg="#708090", fg="white").pack()
+
+        # Descrição da carta
+        if not reverserd:
+            desc_frame = tk.Frame(main_frame, bg="#708090")
+            desc_frame.pack(fill="x", padx=20, pady=10)
+
+            tk.Label(
+                desc_frame,
+                text="Significado:",
+                font=('Arial 12 bold'),
+                bg="#708090",
+                fg="white",
+                anchor="w"
+            ).pack(fill="x")
+
+            message_text = carta.get("message", str(carta['desc']).replace(".", ".\n"))
+            tk.Label(
+                desc_frame,
+                text=message_text,
+                font=("Arial 12"),
+                bg="#708090",
+                fg="white",
+                wraplength=550,
+                justify="left"
+            ).pack(fill="x", pady=(0, 10))
+        else:
+            # Se tiver significado invertido
+            tk.Label(
+                desc_frame,
+                text="Significado Invertido:",
+                font=('Arial 12 bold'),
+                bg="#708090",
+                fg="white",
+                anchor="w"
+            ).pack(fill="x")
+
+            tk.Label(
+                desc_frame,
+                text=carta["rdesc"],
+                font=("Arial 12"),
+                bg="#708090",
+                fg="white",
+                wraplength=550,
+                justify="left"
+            ).pack(fill="x")
+
+        # Botão de fechar
+        tk.Button(
+            detail_window,
+            text="Fechar",
+            command=detail_window.destroy,
+            bg="#B0C4DE",
+            fg="black",
+            font=("Arial", 12),
+            width=15
+        ).pack(pady=10)
 
     def remove_buttons(self):
         """Remove os botões da tela"""
@@ -157,7 +255,10 @@ class GameView:
         reversed = cart[1] == 1
 
         self.remove_buttons()  # Remove os botões
-        self.display_card(carta, column=2, reversed=reversed)
+        if self.show_cards_immediately:
+            self.display_card(carta, column=2, reversed=reversed)
+        else:
+            self.display_card_hidden()
         self.create_restart_button()
 
     def on_click_btn3(self):

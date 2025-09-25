@@ -8,6 +8,7 @@ class Application:
         self.root.title('Tarot')
         self.root.geometry("1320x700")
         self.root.resizable(True, True)
+        self.show_cards_immediately = True 
 
         self.setup_background()
         self.setup_grid()
@@ -47,6 +48,27 @@ class Application:
             "highlightbackground": "black",
         }
 
+        config_style = {
+            "width": 3,        
+            "height": 2,          
+            "bg": "#4682B4",      
+            "fg": "white",        
+            "font": ("Arial", 16, "bold"),  
+            "relief": "raised",
+            "bd": 4,
+            "highlightthickness": 2,
+            "highlightbackground": "black",
+            "text": "⚙️",         
+        }
+
+        btnconfig = tk.Button(
+            self.root,
+            
+            command=self.on_click_btnconfig,  # You'll need to create this method
+            **config_style,
+        )
+        btnconfig.grid(row=0, column=0, pady=10, padx=10, sticky="w")
+
         btnstart = tk.Button(
             self.root,
             text="Start",
@@ -65,6 +87,7 @@ class Application:
 
         self.apply_hover_effect(btnstart, "#696969", "#B0C4DE")
         self.apply_hover_effect(btncards, "#696969", "#B0C4DE")
+        self.apply_hover_effect(btnconfig, "#696969", "#B0C4DE")
 
     def apply_hover_effect(self, button, hover_color, original_color):
         def on_enter(event):
@@ -76,12 +99,30 @@ class Application:
         button.bind("<Enter>", on_enter)
         button.bind("<Leave>", on_leave)
 
+    def update_config_button_style(self):
+        if hasattr(self, 'btnconfig'):
+            if self.show_cards_immediately:
+                self.btnconfig.config(text="⚙️", bg="#4682B4")  # Normal gear
+            else:
+                self.btnconfig.config(text="🎭", bg="#FF6B35")  # Theater masks for surprise mode
+
+    def on_click_btnconfig(self):
+        """Toggle between reveal modes"""
+        self.show_cards_immediately = not self.show_cards_immediately
+        self.refresh_display()
+        self.update_config_button_style()
+        print(self.show_cards_immediately)
+
     def on_click_btnstart(self):
         from views.game_view import GameView
         self.clear_frame()
-        GameView(self.root)
+        GameView(self.root, self)
 
     def on_click_btncards(self):
         from views.deck_view import DeckView
         self.clear_frame()
         DeckView(self.root)
+
+    def refresh_display(self):
+        if hasattr(self, 'current_cards'):
+            self.display_cards(self.current_cards)
