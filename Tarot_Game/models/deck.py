@@ -1,13 +1,15 @@
 import random
+from utils.shuffler import Shuffler
 
 class Deck:
     def deck_suffle(deck):
-        random.shuffle(deck)
+        shuffler = Shuffler()
+        shuffler.shuffle(deck)
 
     def get_card(deck):
-        num = random.randint(0, len(deck) - 1)  # the minus 1 fixes the zero indexed array out-of-range error
-        card = deck[num]
-        del (deck[num])  # so we don't get the same card twice if we're calling this multiple times for the same hand
+        if not deck:
+            return None
+        card = deck.pop(0)  # Take from the top of the shuffled deck
         rev = random.randint(0, 1)  # is card reversed? zero (false) or 1 (true)
         drawn = (card, rev)  # tuple of card dictionary + 1 or zero for reversal
         return drawn

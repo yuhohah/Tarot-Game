@@ -5,8 +5,9 @@ from models.deck import Deck
 from utils.resource_path import resource_path
 
 class DeckView:
-    def __init__(self, root):
+    def __init__(self, root, app_instance):
         self.root = root
+        self.app_instance = app_instance
         self.deck = Deck
         self.background_label = None
         self.setup_ui()
@@ -213,11 +214,10 @@ class DeckView:
 
     def go_back(self):
         """Volta para a tela principal"""
-        from views.main_view import Application
         self.clear_frame()
         # Remove o binding do ESC para evitar múltiplas chamadas
         self._remove_all_binds()
-        Application(self.root)
+        self.app_instance.show_main_menu()
 
     def clear_frame(self):
         """Limpa todos os widgets exceto o background"""

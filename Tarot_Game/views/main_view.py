@@ -10,9 +10,14 @@ class Application:
         self.root.resizable(True, True)
         self.show_cards_immediately = True 
 
+        self.show_main_menu()
+
+    def show_main_menu(self):
+        self.clear_frame()
         self.setup_background()
         self.setup_grid()
         self.create_initial_buttons()
+        self.update_config_button_style()
 
     def setup_background(self):
         bg_image_path = resource_path("images/background.jpg")
@@ -61,13 +66,12 @@ class Application:
             "text": "⚙️",         
         }
 
-        btnconfig = tk.Button(
+        self.btnconfig = tk.Button(
             self.root,
-            
             command=self.on_click_btnconfig,  # You'll need to create this method
             **config_style,
         )
-        btnconfig.grid(row=0, column=0, pady=10, padx=10, sticky="w")
+        self.btnconfig.grid(row=0, column=0, pady=10, padx=10, sticky="w")
 
         btnstart = tk.Button(
             self.root,
@@ -87,7 +91,7 @@ class Application:
 
         self.apply_hover_effect(btnstart, "#696969", "#B0C4DE")
         self.apply_hover_effect(btncards, "#696969", "#B0C4DE")
-        self.apply_hover_effect(btnconfig, "#696969", "#B0C4DE")
+        self.apply_hover_effect(self.btnconfig, "#696969", "#B0C4DE")
 
     def apply_hover_effect(self, button, hover_color, original_color):
         def on_enter(event):
@@ -109,7 +113,6 @@ class Application:
     def on_click_btnconfig(self):
         """Toggle between reveal modes"""
         self.show_cards_immediately = not self.show_cards_immediately
-        self.refresh_display()
         self.update_config_button_style()
         print(self.show_cards_immediately)
 
@@ -121,8 +124,4 @@ class Application:
     def on_click_btncards(self):
         from views.deck_view import DeckView
         self.clear_frame()
-        DeckView(self.root)
-
-    def refresh_display(self):
-        if hasattr(self, 'current_cards'):
-            self.display_cards(self.current_cards)
+        DeckView(self.root, self)

@@ -1,7 +1,8 @@
 Tarot Game in Python
 
-A project to understand Python and make use of it, the subject of being a tarot game is only because its cool
+A project to understand Python graphical library Tkinter, also making use of Quantum Random Number Generator (QRNG) for a real
+Shuffle in the tarot deck. 
 
-Command line to run: python3 Deck.py && python3 Jogo_Completo.py
+Command line to run: python main.py
 
 Command line to compile in a .exe file: python -m PyInstaller --onefile --noconsole --add-data "images;images" --add-data "Deck.py;." Jogo_Completo.py
