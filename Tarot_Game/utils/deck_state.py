@@ -15,8 +15,13 @@ class DeckState:
         Saves the current state of the deck to a JSON file.
         Only saves the card 'sequence' number.
         """
-        # Convert deck to IDs (sequences)
-        deck_ids = [card["sequence"] if isinstance(card, dict) else card for card in deck]
+        # Convert deck to IDs and reversed state: [seq, is_reversed]
+        deck_ids = []
+        for card in deck:
+            if isinstance(card, dict):
+                deck_ids.append([card["sequence"], 1 if card.get("is_reversed") else 0])
+            else:
+                deck_ids.append(card)
         
         # Convert drawn cards to [seq, rev]
         drawn_ids = []

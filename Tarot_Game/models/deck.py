@@ -10,7 +10,8 @@ class Deck:
         if not deck:
             return None
         card = deck.pop(0)  # Take from the top of the shuffled deck
-        rev = random.randint(0, 1)  # is card reversed? zero (false) or 1 (true)
+        # Use the pre-calculated reversed state from the shuffler
+        rev = card.get("is_reversed", 0) if isinstance(card, dict) else 0
         drawn = (card, rev)  # tuple of card dictionary + 1 or zero for reversal
         return drawn
 

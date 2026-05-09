@@ -15,6 +15,7 @@ class Shuffler:
         self.qnrg = QNRG()
         self._byte_cache = []   # holds raw bytes (0‑255)
         self._cache_pos = 0
+        self._refill_cache()
 
     def _refill_cache(self, num_bytes: int = 100):
         """Fetch fresh random bytes from the qnrg and append to cache."""

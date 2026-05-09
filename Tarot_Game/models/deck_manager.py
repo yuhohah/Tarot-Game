@@ -12,8 +12,14 @@ class DeckManager:
             for item in saved_state.get("deck", []):
                 if isinstance(item, dict):
                     self.deck.append(item)
+                elif isinstance(item, (list, tuple)):
+                    card = reference_deck[item[0]].copy()
+                    card["is_reversed"] = item[1]
+                    self.deck.append(card)
                 else:
-                    self.deck.append(reference_deck[item])
+                    card = reference_deck[item].copy()
+                    card["is_reversed"] = 0
+                    self.deck.append(card)
             
             self.drawn_cards = []
             for item in saved_state.get("drawn_cards", []):
@@ -45,6 +51,9 @@ class DeckManager:
             import random
             messagebox.showerror("Erro na API Quântica", f"Falha na conexão: {e}\n\nUsando embaralhador padrão do Python.")
             random.shuffle(self.deck)
+            for card in self.deck:
+                if isinstance(card, dict):
+                    card["is_reversed"] = random.randint(0, 1)
             
         DeckState.save_state(self.deck, self.drawn_cards)
 

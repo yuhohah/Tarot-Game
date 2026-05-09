@@ -44,34 +44,46 @@ class Application:
         style = {
             "width": 20,
             "height": 2,
-            "bg": "#B0C4DE",
-            "fg": "black",
-            "font": ("Arial", 14, "bold"),
-            "relief": "raised",
-            "bd": 5,
-            "highlightthickness": 2,
-            "highlightbackground": "black",
+            "bg": "#1a1a2e",
+            "fg": "#d4af37",
+            "font": ("Georgia", 14, "bold"),
+            "relief": "flat",
+            "bd": 0,
+            "activebackground": "#2a2a4e",
+            "activeforeground": "#f1e5ac",
+            "cursor": "hand2",
         }
 
         config_style = {
             "width": 3,        
             "height": 2,          
-            "bg": "#4682B4",      
-            "fg": "white",        
-            "font": ("Arial", 16, "bold"),  
-            "relief": "raised",
-            "bd": 4,
-            "highlightthickness": 2,
-            "highlightbackground": "black",
+            "bg": "#1a1a2e",      
+            "fg": "#d4af37",        
+            "font": ("Georgia", 16, "bold"),  
+            "relief": "flat",
+            "bd": 0,
+            "activebackground": "#2a2a4e",
+            "activeforeground": "#f1e5ac",
+            "cursor": "hand2",
             "text": "⚙️",         
         }
 
         self.btnconfig = tk.Button(
             self.root,
-            command=self.on_click_btnconfig,  # You'll need to create this method
+            command=self.on_click_btnconfig,
             **config_style,
         )
         self.btnconfig.grid(row=0, column=0, pady=10, padx=10, sticky="w")
+
+        title_label = tk.Label(
+            self.root,
+            text="T A R O T",
+            font=("Georgia", 48, "bold"),
+            bg="#0b0b14", # Very dark color to blend with typical night sky background
+            fg="#d4af37",
+            padx=20, pady=10
+        )
+        title_label.grid(row=1, column=2, pady=30)
 
         btnstart = tk.Button(
             self.root,
@@ -89,9 +101,9 @@ class Application:
         )
         btncards.grid(row=3, column=2, pady=10)
 
-        self.apply_hover_effect(btnstart, "#696969", "#B0C4DE")
-        self.apply_hover_effect(btncards, "#696969", "#B0C4DE")
-        self.apply_hover_effect(self.btnconfig, "#696969", "#B0C4DE")
+        self.apply_hover_effect(btnstart, "#2a2a4e", "#1a1a2e")
+        self.apply_hover_effect(btncards, "#2a2a4e", "#1a1a2e")
+        self.apply_hover_effect(self.btnconfig, "#2a2a4e", "#1a1a2e")
 
     def apply_hover_effect(self, button, hover_color, original_color):
         def on_enter(event):
@@ -106,9 +118,9 @@ class Application:
     def update_config_button_style(self):
         if hasattr(self, 'btnconfig'):
             if self.show_cards_immediately:
-                self.btnconfig.config(text="⚙️", bg="#4682B4")  # Normal gear
+                self.btnconfig.config(text="⚙️", bg="#1a1a2e")  # Normal gear
             else:
-                self.btnconfig.config(text="🎭", bg="#FF6B35")  # Theater masks for surprise mode
+                self.btnconfig.config(text="🎭", bg="#d4af37", fg="#1a1a2e")  # Gold background for active state
 
     def on_click_btnconfig(self):
         """Toggle between reveal modes"""
